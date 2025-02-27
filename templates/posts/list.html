@@ -1,0 +1,27 @@
+{% for post in posts %}
+  <div class="col-md-12 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ post.title }}
+          {% if post.status == 'draft' %}
+            <span class="badge bg-warning">Draft</span>
+          {% endif %}
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">By {{ post.author.username }} on {{ post.created_at|date }}</h6>
+        <p class="card-text">{{ post.body|truncatewords:30 }}</p>
+        <a href="{% url 'posts:detail' post.pk %}" class="card-link">Read more</a>
+        {% if user == post.author %}
+          <a href="{% url 'posts:update' post.pk %}" class="card-link">Edit</a>
+          {% if post.status == 'draft' %}
+            <form method="post" action="{% url 'posts:publish' post.pk %}" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-success">Publish</button>
+            </form>
+          {% endif %}
+          <a href="{% url 'posts:delete' post.pk %}" class="card-link text-danger">Delete</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}

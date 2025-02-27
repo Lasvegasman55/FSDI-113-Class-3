@@ -1,0 +1,40 @@
+{% extends "_base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ post.title }}</h1>
+      {% if post.status == 'draft' %}
+        <span class="badge bg-warning">Draft</span>
+      {% endif %}
+      <p class="text-muted">
+        By {{ post.author.username }} on {{ post.created_at|date:"F j, Y" }}
+        {% if post.updated_at != post.created_at %}
+          <small>(updated on {{ post.updated_at|date:"F j, Y" }})</small>
+        {% endif %}
+      </p>
+      
+      <div class="my-4">
+        {{ post.body|linebreaks }}
+      </div>
+      
+      <div class="mt-4">
+        <a href="{% url 'posts:list' %}" class="btn btn-secondary">Back to Posts</a>
+        {% if user == post.author %}
+          <a href="{% url 'posts:update' post.pk %}" class="btn btn-primary">Edit</a>
+          {% if post.status == 'draft' %}
+            <form method="post" action="{% url 'posts:publish' post.pk %}" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-success">Publish</button>
+            </form>
+          {% endif %}
+          <a href="{% url 'posts:delete' post.pk %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

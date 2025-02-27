@@ -1,0 +1,31 @@
+{% extends "_base.html" %}
+
+{% block title %}Permission Denied (403){% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <h1 class="display-1 text-danger">403</h1>
+          <h2 class="mb-4">Permission Denied</h2>
+          <p class="lead">Sorry, you don't have permission to access this page.</p>
+          <p>This might be because:</p>
+          <ul class="list-unstyled">
+            <li>You're trying to access content that belongs to another user</li>
+            <li>You need to be logged in to view this page</li>
+            <li>You don't have the required permissions for this action</li>
+          </ul>
+          <div class="mt-4">
+            <a href="{% url 'home' %}" class="btn btn-primary">Return to Home</a>
+            {% if not user.is_authenticated %}
+              <a href="{% url 'login' %}" class="btn btn-outline-secondary ms-2">Log In</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
