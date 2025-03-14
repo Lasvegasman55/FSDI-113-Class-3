@@ -123,6 +123,25 @@ class ArchievePostListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Archive'
         return context
+    from django.views.generic import ListView
+from .models import Post
+
+class DraftListView(ListView):
+    model = Post
+    template_name = 'posts/draft_list.html'
+    context_object_name = 'posts'
+    
+    def get_queryset(self):
+        # Assuming your Post model has a status field or similar
+        return Post.objects.filter(status='draft', author=self.request.user)
+    
+class ArchiveListView(ListView):
+    model = Post
+    template_name = 'posts/archive_list.html'
+    context_object_name = 'posts'
+    
+    def get_queryset(self):
+        return Post.objects.filter(status='archived', author=self.request.user)
     
     # In views.py
 @login_required

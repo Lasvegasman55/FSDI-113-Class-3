@@ -25,31 +25,30 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'about' %}">About</a>
                     </li>
+                    
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'draft' %}">Draft</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'archieve' %}">Archieve</a>
-                    </li>
-                   
-                    <li class="nav-item">
-                        <form action="{% url 'logout' %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="nav-link btn btn-link">Log Out</button>
-                        </form>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Draft</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Archive</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{% url 'logout' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link btn btn-link">Log Out</button>
+                            </form>
+                        </li>
                     {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>
-        </div>
     </nav>
 
     <div class="container mt-4">

@@ -1,7 +1,84 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}Flight Simulation Blog - Home{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Home Page</h1>
-{% endblock content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="display-4 mt-4">Welcome to Horizon Flight Blog</h1>
+            
+            <div class="my-4">
+                <img src="https://via.placeholder.com/1200x400?text=Flight+Simulation" alt="Flight Simulator Banner" class="img-fluid rounded">
+            </div>
+
+            <h3 class="text-primary">Soaring Through the Digital Skies</h3>
+            <p class="lead">
+                Welcome fellow aviation enthusiasts and virtual pilots! This blog is dedicated to the fascinating world of 
+                flight simulation - where precision meets passion and technology enables us to experience the thrill of 
+                flight from the comfort of our homes.
+            </p>
+
+            <h3 class="mt-4">What You'll Find Here</h3>
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item"><strong>Flight Sim Reviews:</strong> Detailed analysis of the latest flight simulation software and hardware</li>
+                <li class="list-group-item"><strong>Tutorial Tuesdays:</strong> Step-by-step guides for beginners and advanced techniques for veterans</li>
+                <li class="list-group-item"><strong>Aircraft Spotlights:</strong> Deep dives into faithfully recreated virtual aircraft</li>
+                <li class="list-group-item"><strong>Community Stories:</strong> Interviews and shared experiences from fellow simmers</li>
+                <li class="list-group-item"><strong>Setup Showcases:</strong> Inspiration for your own cockpit from minimalist to full-motion rigs</li>
+            </ul>
+
+            <h3>Latest from the Cockpit</h3>
+            <div class="card-deck mt-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">MSFS 2025: What We Know So Far</h5>
+                        <p class="card-text">A look at the upcoming features in the next-gen simulator</p>
+                        <a href="#" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Building a Budget Home Cockpit</h5>
+                        <p class="card-text">Creating an immersive experience without breaking the bank</p>
+                        <a href="#" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">The Art of the Perfect Landing</h5>
+                        <p class="card-text">Tips from real and virtual pilots on greasing those landings</p>
+                        <a href="#" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Flight Plan</h3>
+            <p>
+                I started this journey as a child fascinated by the miracle of flight, progressed through desktop 
+                flight sims of the 90s, and have now logged thousands of virtual hours across multiple platforms. 
+                Whether you're taking your first virtual flight or you're a seasoned captain, I hope this blog helps 
+                you find joy in the virtual skies.
+            </p>
+
+            <blockquote class="blockquote">
+                <p class="mb-0">"Once you have tasted flight, you will forever walk the earth with your eyes turned skyward, for there you have been, and there you will always long to return."</p>
+                <footer class="blockquote-footer">Leonardo da Vinci</footer>
+            </blockquote>
+
+            <div class="mt-4 mb-5">
+                <p class="lead">
+                    Ready for takeoff? <a href="#">Check out my first-timer's guide to flight simulation</a> or 
+                    <a href="#">join our Discord community</a>.
+                </p>
+                
+                <p class="font-italic">
+                    Clear skies and tailwinds,<br>
+                    Michael Matthews<br>
+                    Virtual Pilot & Flight Sim Enthusiast
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
