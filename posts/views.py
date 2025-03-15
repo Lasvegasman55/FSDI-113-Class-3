@@ -2,13 +2,12 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from .models import Post
 from .forms import PostForm
-from django.db import models  
-from django.shortcuts import get_object_or_404  
-from django.contrib.auth.decorators import login_required  
-from django.core.exceptions import PermissionDenied  
+from django.db import models
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 class PostListView(LoginRequiredMixin, ListView):
     model = Post
@@ -25,6 +24,7 @@ class PostListView(LoginRequiredMixin, ListView):
                 models.Q(author=self.request.user)
             )
         return queryset
+
 class DraftPostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'posts/list.html'
@@ -50,6 +50,11 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         if obj.status == 'draft' and obj.author != self.request.user and not self.request.user.is_staff:
             raise PermissionDenied
         return obj
+def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['action'] = 'Create'
+    print("Loading template with context:", context)
+    return context
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -72,7 +77,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
-    template_name = 'posts/post_form.html'
+    template_name = 'posts/form.html'  # Changed to match PostCreateView
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -108,42 +113,21 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, 'Post deleted successfully!')
         return super().delete(request, *args, **kwargs)
-    
-class ArchievePostListView(LoginRequiredMixin, ListView):
+
+class ArchivePostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'posts/list.html'
     context_object_name = 'posts'
     
     def get_queryset(self):
-        # Define your logic for what constitutes "archived" posts
-        # For example, posts older than a certain date
-        return Post.objects.filter(author=self.request.user).order_by('-created_at')
+        # Filter for archived posts belonging to the current user
+        return Post.objects.filter(author=self.request.user, status='archived')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Archive'
         return context
-    from django.views.generic import ListView
-from .models import Post
 
-class DraftListView(ListView):
-    model = Post
-    template_name = 'posts/draft_list.html'
-    context_object_name = 'posts'
-    
-    def get_queryset(self):
-        # Assuming your Post model has a status field or similar
-        return Post.objects.filter(status='draft', author=self.request.user)
-    
-class ArchiveListView(ListView):
-    model = Post
-    template_name = 'posts/archive_list.html'
-    context_object_name = 'posts'
-    
-    def get_queryset(self):
-        return Post.objects.filter(status='archived', author=self.request.user)
-    
-    # In views.py
 @login_required
 def publish_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
